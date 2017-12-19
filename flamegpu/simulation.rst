@@ -93,7 +93,7 @@ These options are configuration specific and therefore console configurations by
    :alt: FLAME GPU Modelling and Simulation Processes
    :width: 75.0%
    
-    FLAME GPU Build Rule XSLT Options Tab
+   FLAME GPU Build Rule XSLT Options Tab
 
 
 Visual Studio Launch Configuration Command Arguments
@@ -158,7 +158,9 @@ Replace ``{example name}`` with the name of the specific example you wish to bui
 - Visualisation mode: ``./*_vis.sh}``
 - Console mode: ``./*_console.sh iter='arg'``
 
-*Note: XML output is disabled but can be re-enabled by setting the``XML_OUTPUT`` definition in the automatically generated ``src/dynamic/main.cu`` file to ``1``. After rebuilding and running the simulation again this will create an XML file (saved in the location of the initial input file) for each iteration which will contain the state of the agents after applying a single simulation iteration to the agents (in the same formal as ``0.xml``. You can view this file (``cat`` command) to see how the agent properties have changed.
+.. @todo - This is not the case? It is 1 by default, but can be overridden either by changing to 0 or using the new runtime argument.
+
+*Note*: XML output is disabled but can be re-enabled by setting the``XML_OUTPUT`` definition in the automatically generated ``src/dynamic/main.cu`` file to ``1``. After rebuilding and running the simulation again this will create an XML file (saved in the location of the initial input file) for each iteration which will contain the state of the agents after applying a single simulation iteration to the agents (in the same formal as ``0.xml``. You can view this file (``cat`` command) to see how the agent properties have changed.
 
 The parameters passed to the simulation are the initial model file and the number of simulation runs (iterations). Note that by default, the number of iterations is set to ``1``. In order to modify the number of iterations, pass an argument to the shell script (e.g: ``iter=50``):
 

@@ -112,87 +112,35 @@ The Command Arguments have been set the simulation executable can be launched by
    :width: 75.0%
    
 
-Compilation using Make (for Linux)
-==================================
-
-Linux compilation is controlled using ``make``, with makefiles provided for each example. 
+Compilation using Make (for Linux and Windows)
+==============================================
 
 
-1. Install Ubuntu 16.04 or later. 
-2. Install all the needed build tools and libraries:  
-    
-.. code-block:: bash
+``make`` can be used to build FLAME GPU under linux and windows (via a windows implementation of ``make``).
 
-    sudo apt-get install g++ git make libxml2-utils
+Makefiles are provided for each example project ``examples/project/Makefile``), and for batch building all examples (``examples/Makefile``).
 
-Minimum supported versions are ``g++ 4.8`` and ``cuda 7.5``.
+To build a console example in release mode:
 
-3. Download the FLAME GPU SDK release or alternatively clone the project using Git (it will be cloned into the folder ``FLAMEGPU``):  
 
 .. code-block:: bash
 
-    git clone https://github.com/FLAMEGPU/FLAMEGPU.git
+    cd examples/EmptyExample/
+    make console
 
-4. Build the SDK in Release mode (this is the default mode):
 
-.. code-block:: bash
-
-    cd FLAMEGPU/examples
-    make
-
-This will process the XML model and build both console and visualisation version of the model in release mode. You can build the Debug version by specifying ``dbg`` value on the make line instead (``make all dbg=1``).  Moreover, for each example, executables can also be built in either Visualisation (``make Visualisation_mode``) or Console (``make Console_mode``) mode.
+Or for a visualisation example in release mode:
 
 .. code-block:: bash
 
-    cd examples/{example name}
-    make XSLTPREP
-    make Visualisation_mode
-    # or
-    make Console_mode
+    cd examples/EmptyExample/
+    make Visualisation
 
 
-Replace ``{example name}`` with the name of the specific example you wish to build.
+*Debug* mode executables can be built by specifying ``debug=1`` to make, ``make all debug=1``. The generated executable can then be debugged using ``cuda-gdb``.
 
-5. After building the executables, run the examples by executing the relevant bash script inside the "bin/linux-x64" folder:
+For more information on building FLAME GPU via make, run ``make help`` in an example directory.
 
-- Visualisation mode: ``./*_vis.sh}``
-- Console mode: ``./*_console.sh iter='arg'``
-
-.. @todo - This is not the case? It is 1 by default, but can be overridden either by changing to 0 or using the new runtime argument.
-
-*Note*: XML output is disabled but can be re-enabled by setting the``XML_OUTPUT`` definition in the automatically generated ``src/dynamic/main.cu`` file to ``1``. After rebuilding and running the simulation again this will create an XML file (saved in the location of the initial input file) for each iteration which will contain the state of the agents after applying a single simulation iteration to the agents (in the same formal as ``0.xml``. You can view this file (``cat`` command) to see how the agent properties have changed.
-
-The parameters passed to the simulation are the initial model file and the number of simulation runs (iterations). Note that by default, the number of iterations is set to ``1``. In order to modify the number of iterations, pass an argument to the shell script (e.g: ``iter=50``):
-
-
-6. Debugging examples:
-
-.. code-block:: bash
-
-    cd examples/{folder name}
-    make Console_mode dbg=1
-
-- Debugging with \verb|cuda-gdb|
-
-.. code-block:: bash
-
-    cuda-gdb ../../bin/x64/Debug_Console/{folder name}_console
-    ..
-    (cuda-gdb) run iterations/0.xml 2
-    ...
-
-- Debugging with `valgrind`
-
-.. code-block:: bash
-
-    valgrind --tool=memcheck {executable} iterations/0.xml 1
-
-where ``executable`` is ``../../bin/x64/Debug_Console/{folder name}_console``.
-
-
-7. Clean generated dynamic and object files with ``make clobber``. Note that you need to use ``make XSLTPREP`` to generate the ``.cu`` files first, then build a specific target (console or visualisation mode). ``make all`` would generate the dynamic files as well as building the executables. And ``make clean`` only deletes the object files and leaves the \verb|.cu| files behind.
-
-8. For more details on how to build specific targets for each example, run ``make help``
 
 Simulation Execution Modes and Options
 ======================================
